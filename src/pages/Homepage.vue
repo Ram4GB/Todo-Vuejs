@@ -132,7 +132,7 @@ export default {
         let time = new Date();
         this.user.time = time;
         this.$http
-          .post("http://localhost:3030/todos", this.user)
+          .post("https://getapishop.herokuapp.com/todos", this.user)
           .then(async function(data) {
             // console.log(data);
             if (data.status === 201 && data.ok === true) {
