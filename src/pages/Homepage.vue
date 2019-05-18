@@ -92,7 +92,7 @@ export default {
       else {
         this.todos = this.$store.state.todos;
       }
-      console.log(this.sortTitle);
+      // console.log(this.sortTitle);
       if (this.sortTitle === true) {
         fastsort(this.todos).asc(u => u.title);
       }
@@ -132,10 +132,10 @@ export default {
         let time = new Date();
         this.user.time = time;
         this.$http
-          .post("https://todo-e5614.firebaseio.com/data.json", this.user)
+          .post("http://localhost:3030/todos", this.user)
           .then(async function(data) {
-            console.log(data);
-            if (data.status === 200 && data.ok === true) {
+            // console.log(data);
+            if (data.status === 201 && data.ok === true) {
               await this.getAllProductFromServer();
               this.empty();
             }

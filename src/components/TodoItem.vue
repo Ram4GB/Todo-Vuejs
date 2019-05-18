@@ -20,6 +20,20 @@
       <div class="right-col col-lg-6 d-flex align-items-center">
         <div class="time">
           <span class="hidden-sm-down">{{todo.time}}</span>
+          <div class="row">
+            <div class="col-4">
+              <button @click="deleteTodoItem(todo.id)" class="btn btn-success">Delete</button>
+            </div>
+            <div class="col-4">
+              <router-link :to="{name:'edit',params:{id:todo.id}}">
+                <button class="btn btn-danger">Edit</button>
+              </router-link>
+            </div>
+            <div class="col-4">
+              <button @click="updateStatus(todo)" v-if="todo.status" class="btn btn-primary">Done</button>
+              <button @click="updateStatus(todo)" v-else class="btn btn-warning">Not</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -28,6 +42,7 @@
 
 <script>
 import VueLoadImage from "vue-load-image";
+import { mapActions } from "vuex";
 export default {
   name: "todo-item",
   props: ["todo"],
@@ -35,6 +50,16 @@ export default {
   mounted: function() {},
   components: {
     "vue-load-image": VueLoadImage
+  },
+  methods: {
+    ...mapActions(["delete", "getAllProductFromServer", "updateStatusStore"]),
+    deleteTodoItem: async function(id) {
+      await this.delete(id);
+    },
+    updateStatus: async function(data) {
+      console.log(data);
+      await this.updateStatusStore(data);
+    }
   }
 };
 </script>

@@ -5,6 +5,13 @@ import VeeValidate from "vee-validate";
 
 Vue.use(Vuex);
 Vue.use(VeeValidate);
+const url = "https://getapishop.herokuapp.com";
+const findIndex = function(arr, id) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id == id) return i;
+  }
+  return -1;
+};
 
 export default new Vuex.Store({
   state: {
@@ -13,20 +20,95 @@ export default new Vuex.Store({
   mutations: {
     refeshDatabase: function(state, data) {
       state.todos = data;
+    },
+    updateStatus: function(state, data) {
+      let index = findIndex(state.todos, data.id);
+      let arr = [
+        ...state.todos.slice(0, index),
+        data,
+        ...state.todos.slice(index + 1)
+      ];
+      if (index != -1) {
+        state.todos = arr;
+      }
+      console.log(index);
+    },
+    delete: function(state, id) {
+      let index = findIndex(state.todos, id);
+      if (index != -1) {
+        let arr = [
+          ...state.todos.slice(0, index),
+          ...state.todos.slice(index + 1)
+        ];
+        state.todos = arr;
+      }
+    },
+    update: function(state, data) {
+      let index = findIndex(state.todos, data.id);
+      let arr = [
+        ...state.todos.slice(0, index),
+        data,
+        ...state.todos.slice(index + 1)
+      ];
+      state.todos = arr;
     }
   },
   actions: {
     getAllProductFromServer: async function({ commit }) {
       await axios({
         method: "GET",
-        url: "https://todo-e5614.firebaseio.com/data.json"
+        url: "https://getapishop.herokuapp.com/todos"
       }).then(function(data) {
         let arr = [];
-        for (let i in data.data) {
-          arr.push(data.data[i]);
-        }
+        arr = data.data;
         commit("refeshDatabase", arr);
       });
+    },
+    delete: async function({ commit }, id) {
+      await axios({
+        method: "DELETE",
+        url: `https://getapishop.herokuapp.com/todos/${id}`
+      }).then(function(data) {
+        if (data.status === 200) {
+          alert("Delete successfully");
+          commit("delete", id);
+        }
+      });
+    },
+    updateStatusStore: async function({ commit }, data) {
+      let temp = {
+        ...data,
+        status: !data.status
+      };
+      await axios({
+        method: "PUT",
+        url: `https://getapishop.herokuapp.com/todos/${data.id}`,
+        data: temp
+      }).then(function(res) {
+        if (res.status === 200) commit("updateStatus", temp);
+      });
+    },
+    update: async function({ commit }, data) {
+      await axios({
+        method: "PUT",
+        url: `https://getapishop.herokuapp.com/todos/${data.id}`,
+        data
+      }).then(function(res) {
+        if (res.status === 200) {
+          alert("Edit success");
+          commit("update", data);
+        }
+      });
+    },
+    getTodoItem: async function({ commit }, id) {
+      let result = [];
+      await axios({
+        method: "GET",
+        url: `https://getapishop.herokuapp.com/todos/${id}`
+      }).then(function(res) {
+        if (res.status === 200) result = res.data;
+      });
+      return result;
     }
   },
   getters: {
