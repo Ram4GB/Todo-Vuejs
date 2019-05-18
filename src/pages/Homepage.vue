@@ -47,7 +47,12 @@
               style="text-align:center;font-size:1.2em;cursor:pointer"
             >Time</div>
           </div>
-          <TodoItem :key="todo.id" v-for="todo in todoFilter" :todo="todo"/>
+          <transition-group
+            enter-active-class="animated bounceInLeft"
+            leave-active-class="animated bounceOutRight"
+          >
+            <TodoItem :key="todo.id" v-for="todo in todoFilter" :todo="todo"/>
+          </transition-group>
         </template>
       </div>
     </section>
@@ -58,6 +63,7 @@
 import TodoItem from "../components/TodoItem";
 import fastsort from "fast-sort";
 import { mapGetters, mapActions } from "vuex";
+import url from "../constants/Configs.js";
 export default {
   name: "Homepage",
   components: {
@@ -132,7 +138,7 @@ export default {
         let time = new Date();
         this.user.time = time;
         this.$http
-          .post("https://getapishop.herokuapp.com/todos", this.user)
+          .post(`${url}/todos`, this.user)
           .then(async function(data) {
             // console.log(data);
             if (data.status === 201 && data.ok === true) {

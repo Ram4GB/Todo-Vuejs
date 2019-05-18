@@ -2,10 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import VeeValidate from "vee-validate";
-
+import url from "./constants/Configs.js";
 Vue.use(Vuex);
 Vue.use(VeeValidate);
-const url = "https://getapishop.herokuapp.com";
 const findIndex = function(arr, id) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].id == id) return i;
@@ -57,7 +56,7 @@ export default new Vuex.Store({
     getAllProductFromServer: async function({ commit }) {
       await axios({
         method: "GET",
-        url: "https://getapishop.herokuapp.com/todos"
+        url: `${url}/todos`
       }).then(function(data) {
         let arr = [];
         arr = data.data;
@@ -67,10 +66,9 @@ export default new Vuex.Store({
     delete: async function({ commit }, id) {
       await axios({
         method: "DELETE",
-        url: `https://getapishop.herokuapp.com/todos/${id}`
+        url: `${url}/todos/${id}`
       }).then(function(data) {
         if (data.status === 200) {
-          alert("Delete successfully");
           commit("delete", id);
         }
       });
@@ -82,7 +80,7 @@ export default new Vuex.Store({
       };
       await axios({
         method: "PUT",
-        url: `https://getapishop.herokuapp.com/todos/${data.id}`,
+        url: `${url}/todos/${data.id}`,
         data: temp
       }).then(function(res) {
         if (res.status === 200) commit("updateStatus", temp);
@@ -91,7 +89,7 @@ export default new Vuex.Store({
     update: async function({ commit }, data) {
       await axios({
         method: "PUT",
-        url: `https://getapishop.herokuapp.com/todos/${data.id}`,
+        url: `${url}/todos/${data.id}`,
         data
       }).then(function(res) {
         if (res.status === 200) {
@@ -104,7 +102,7 @@ export default new Vuex.Store({
       let result = [];
       await axios({
         method: "GET",
-        url: `https://getapishop.herokuapp.com/todos/${id}`
+        url: `${url}/todos/${id}`
       }).then(function(res) {
         if (res.status === 200) result = res.data;
       });
