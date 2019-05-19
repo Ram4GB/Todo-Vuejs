@@ -18,8 +18,8 @@
         <div class="project-date"></div>
       </div>
       <div class="col-lg-6 col-sm-12">
-        <div class="time col-sm-12">
-          <span style="margin:10px 0px" class="hidden-sm-down">{{todo.time}}</span>
+        <div class="time col-sm-12" style="margin:10px 0px">
+          <span style="margin:10px 0px;color:#111" class="hidden-sm-down">{{todo.time}}</span>
         </div>
         <div>
           <div class="col-sm-12">
