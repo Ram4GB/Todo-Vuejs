@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <div class="row bg-white has-shadow">
-      <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+      <div class="col-lg-6 col-sm-12">
         <div class="project-title d-flex align-items-center">
           <div class="image has-shadow">
             <vue-load-image>
@@ -17,22 +17,26 @@
         </div>
         <div class="project-date"></div>
       </div>
-      <div class="right-col col-lg-6 d-flex align-items-center">
-        <div class="time">
-          <span class="hidden-sm-down">{{todo.time}}</span>
-          <div style="margin:10px 0px">
-            <div style="display:inline-block">
-              <button @click="deleteTodoItem(todo.id)" class="btn btn-success">Delete</button>
-            </div>
-            <div style="display:inline-block;margin-left:5px">
-              <router-link :to="{name:'edit',params:{id:todo.id}}">
-                <button class="btn btn-danger">Edit</button>
-              </router-link>
-            </div>
-            <div style="display:inline-block;margin-left:5px">
-              <button @click="updateStatus(todo)" v-if="todo.status" class="btn btn-primary">Done</button>
-              <button @click="updateStatus(todo)" v-else class="btn btn-warning">Not yet</button>
-            </div>
+      <div class="col-lg-6 col-sm-12">
+        <div class="time col-sm-12">
+          <span style="margin:10px 0px" class="hidden-sm-down">{{todo.time}}</span>
+        </div>
+        <div>
+          <div class="col-sm-12">
+            <button @click="deleteTodoItem(todo.id)" class="btn btn-success col-sm-12">Delete</button>
+          </div>
+          <div class="col-sm-12">
+            <router-link :to="{name:'edit',params:{id:todo.id}}">
+              <button class="btn btn-danger col-sm-12">Edit</button>
+            </router-link>
+          </div>
+          <div class="col-sm-12">
+            <button
+              @click="updateStatus(todo)"
+              v-if="todo.status"
+              class="btn btn-primary col-sm-12"
+            >Done</button>
+            <button @click="updateStatus(todo)" v-else class="btn btn-warning col-sm-12">Not yet</button>
           </div>
         </div>
       </div>
