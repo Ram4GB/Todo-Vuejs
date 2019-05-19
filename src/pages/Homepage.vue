@@ -1,22 +1,31 @@
 <template>
   <div class="container">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Todo App</h1>
+        <p class="lead">Hi there! This's the app to write your work that you need to do</p>
+        <p class="lead">1. You can't write down anything if you want</p>
+        <p class="lead">2. Please don't delete the another user'post</p>
+        <p class="lead">3. You can edit,delete and done your work</p>
+      </div>
+    </div>
     <section class="projects no-padding-top">
       <form>
         <div class="form-group">
-          <label for="Title" style="text-align:center">Your Todo</label>
+          <label for="Title" style="text-align:center">Hi User!!</label>
           <span>{{errors.first('title')}}</span>
           <input
             name="title"
             type="text"
             class="form-control"
-            placeholder="Enter title"
+            placeholder="Enter title. Example: Today I have to go to school"
             v-model="user.title"
             id="title"
           >
           <input
             type="text"
             class="form-control"
-            placeholder="Enter author"
+            placeholder="Enter author. Example: Your name or Your nick name"
             v-model="user.author"
             id="author"
           >
@@ -28,7 +37,12 @@
         </div>
       </form>
       <div class="container" style="height:500px;overflow:scroll">
-        <input placeholder="Search...." class="form-control" type="text" v-model="search">
+        <input
+          placeholder="Search post or author...."
+          class="form-control"
+          type="text"
+          v-model="search"
+        >
         <template v-if="isLoading">
           <div v-if="true">
             <img style="display:block;margin:auto" src="gifs/Ripple-1.2s-200px.gif">

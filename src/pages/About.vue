@@ -8,6 +8,9 @@
             <h1 class="display-4">Ram4gb</h1>
             <p class="lead">Hello Everyone! I'm a programer</p>
             <p>This page was created by VueJs</p>
+            <p>This is my first app by using VueJs</p>
+            <p>What up guys!! Hope you enjoy it</p>
+            <p>From: Fat belly</p>
           </div>
         </div>
       </div>
