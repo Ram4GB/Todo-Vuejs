@@ -36,13 +36,13 @@
           >Submit</button>
         </div>
       </form>
+      <input
+        placeholder="Search post or author...."
+        class="form-control"
+        type="text"
+        v-model="search"
+      >
       <div class="container" style="height:500px;overflow:scroll">
-        <input
-          placeholder="Search post or author...."
-          class="form-control"
-          type="text"
-          v-model="search"
-        >
         <template v-if="isLoading">
           <div v-if="true">
             <img style="display:block;margin:auto" src="gifs/Ripple-1.2s-200px.gif">
