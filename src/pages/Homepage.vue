@@ -56,11 +56,7 @@
         </template>
         <template v-else>
           <div class="row">
-            <div
-              @click="sortTitle=!sortTitle"
-              class="col-6"
-              style="text-align:center;font-size:1.2em;cursor:pointer;"
-            >Title</div>
+            <div class="col-6" style="text-align:center;font-size:1.2em;cursor:pointer;">Title</div>
             <div
               @click="sortTime=!sortTime"
               class="col-6"
@@ -100,7 +96,6 @@ export default {
       isLoading: true,
       search: "",
       todos: [],
-      sortTitle: true,
       sortTime: false,
       isSubmitting: false
     };
@@ -120,18 +115,18 @@ export default {
       else {
         this.todos = this.$store.state.todos;
       }
-      // console.log(this.sortTitle);
-      if (this.sortTitle === true) {
-        fastsort(this.todos).asc(u => u.title);
-      }
-      if (this.sortTitle === false) {
-        fastsort(this.todos).desc(u => u.title);
-      }
       if (this.sortTime === true) {
-        fastsort(this.todos).asc(u => u.time);
-      }
-      if (this.sortTime === false) {
-        fastsort(this.todos).desc(u => u.time);
+        this.todos = this.todos.sort((a, b) => {
+          let c = new Date(a.time);
+          let d = new Date(b.time);
+          return c - d;
+        });
+      } else {
+        this.todos = this.todos.sort((a, b) => {
+          let c = new Date(a.time);
+          let d = new Date(b.time);
+          return d - c;
+        });
       }
       return this.todos;
     }
