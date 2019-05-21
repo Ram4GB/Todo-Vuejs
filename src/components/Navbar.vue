@@ -14,7 +14,7 @@
 
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
       <ul class="navbar-nav">
-        <li class="nav-item active">
+        <li class="nav-item">
           <router-link class="nav-link" to="/">
             Homepage
             <span class="sr-only">(current)</span>
