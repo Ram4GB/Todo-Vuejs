@@ -23,7 +23,10 @@
         </div>
         <div>
           <div class="col-sm-12">
-            <button @click="deleteTodoItem(todo.id)" class="btn btn-success col-sm-12">Delete</button>
+            <button
+              @click="deleteTodoItem(todo.id)"
+              class="btn btn-success col-sm-12"
+            >{{isDeleting?"Wait for processing...":"Delete"}}</button>
           </div>
           <div class="col-sm-12">
             <router-link :to="{name:'edit',params:{id:todo.id}}">
@@ -48,6 +51,11 @@
 import VueLoadImage from "vue-load-image";
 import { mapActions } from "vuex";
 export default {
+  data: function() {
+    return {
+      isDeleting: false
+    };
+  },
   name: "todo-item",
   props: ["todo"],
   methods: {},
@@ -58,7 +66,9 @@ export default {
   methods: {
     ...mapActions(["delete", "getAllProductFromServer", "updateStatusStore"]),
     deleteTodoItem: async function(id) {
+      this.isDeleting = true;
       await this.delete(id);
+      this.isDeleting = false;
     },
     updateStatus: async function(data) {
       console.log(data);

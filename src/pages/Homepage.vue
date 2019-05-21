@@ -30,10 +30,16 @@
             id="author"
           >
           <button
+            v-if="isSubmitting===false"
             @click.prevent="handleSubmit()"
             style="margin:3px auto;width:50%;display:block"
             class="btn btn-primary"
           >Submit</button>
+          <button
+            v-else
+            style="margin:3px auto;width:50%;display:block"
+            class="btn btn-primary"
+          >Posting...</button>
         </div>
       </form>
       <input
@@ -78,6 +84,7 @@ import TodoItem from "../components/TodoItem";
 import fastsort from "fast-sort";
 import { mapGetters, mapActions } from "vuex";
 import url from "../constants/Configs.js";
+import { async } from "q";
 export default {
   name: "Homepage",
   components: {
@@ -94,7 +101,8 @@ export default {
       search: "",
       todos: [],
       sortTitle: true,
-      sortTime: false
+      sortTime: false,
+      isSubmitting: false
     };
   },
   computed: {
@@ -147,13 +155,14 @@ export default {
       str = str.trim();
       return str;
     },
-    handleSubmit: function() {
+    handleSubmit: async function() {
       if (this.checkEmpty()) {
-        let date = new Date().toLocaleDateString()
-        let times = new Date().toLocaleTimeString()
-        let time = date+" "+times;
+        let date = new Date().toLocaleDateString();
+        let times = new Date().toLocaleTimeString();
+        let time = date + " " + times;
         this.user.time = time;
-        this.$http
+        this.isSubmitting = true;
+        await this.$http
           .post(`${url}/todos`, this.user)
           .then(async function(data) {
             // console.log(data);
@@ -165,6 +174,7 @@ export default {
           .catch(function(err) {
             alert(err);
           });
+        this.isSubmitting = false;
       }
     },
     ...mapActions(["getAllProductFromServer"]),
