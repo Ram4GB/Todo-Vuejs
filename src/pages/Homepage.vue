@@ -149,7 +149,9 @@ export default {
     },
     handleSubmit: function() {
       if (this.checkEmpty()) {
-        let time = new Date();
+        let date = new Date().toLocaleDateString()
+        let times = new Date().toLocaleTimeString()
+        let time = date+" "+times;
         this.user.time = time;
         this.$http
           .post(`${url}/todos`, this.user)
